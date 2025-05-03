@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Création d'un examen</title>
+  <link rel="stylesheet" href="css/examen.css">
+</head>
+<body>
+  <div id="entete">
+    <h2 id="title" >CREATION D'EXAMEN</h2>
+    <label for="titre">Titre de l'examen :</label>
+    <input type="text" id="titre" placeholder="Saisir un titre:">
+
+    <label for="description">Description :</label>
+    <textarea id="description" placeholder="Saisir un text:"></textarea>
+
+    <label for="public">Public ciblé :</label>
+    <input type="text" id="public" placeholder="Saisir un text(ex: 2e année MIP, S4, groupe A) 
+    ">
+  </div>
+  
+  <div class="questions">
+    <h2 id="questions_entete">Questions</h2>
+    <button id="btn">+ Ajouter une question</button><br>
+    <button id="apercu" style="width: 150px;">Aperçu</button><br>
+    <button id="terminer" style="width: 150px;">Finir </button>
+  </div>
+  <script src="js/examen.js"></script>
+
+</body>
+</html>

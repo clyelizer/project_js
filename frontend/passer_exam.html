@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Passer l'examen</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .hidden { display: none; }
+    .btn { padding: 10px 15px; border: none; background-color: #007BFF; color: white; border-radius: 5px; cursor: pointer; }
+    .btn:disabled { background-color: #ccc; cursor: default; }
+    .timer { font-weight: bold; color: darkred; float: right; }
+    .question-box { border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    #pre-exam { text-align: center; }
+  </style>
+</head>
+<body>
+  <!-- Écran de pré-examen -->
+  <div id="pre-exam">
+    <h2>Examen en ligne</h2>
+    <button id="start-btn" class="btn">Commencer l'examen</button>
+  </div>
+
+  <!-- Conteneur de l'examen -->
+  <div id="exam-container" class="hidden"></div>
+  <div id="resultat" class="hidden"></div>
+
+  <script>
+    // Demande géolocalisation et enregistrement
+    function requestGeolocation(callback) {
+    //   if (!navigator.geolocation) {
+    //     alert('La géolocalisation n\u2019est pas supportée par votre navigateur.');
+    //     return;
+    //   }
+    //   navigator.geolocation.getCurrentPosition(
+    //     (position) => {
+    //       const coords = {
+    //         lat: position.coords.latitude,
+    //         lon: position.coords.longitude
+    //       };
+    //       // Envoyer au serveur (placeholder)
+    //       fetch('/api/save-location', {
+    //         method: 'POST',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(coords)
+    //       }).catch(console.error);
+           callback();
+        }//,
+        // () => {
+        //   alert('Vous devez autoriser la géolocalisation pour passer l\u2019examen.');
+        // }
+      //);
+    //}
+
+    // Déclaration des questions (exemple)
+    const questions = [
+      { type: 'qcm', enonce: 'Quel langage est exécuté dans le navigateur ?', options: ['Java', 'C', 'Python', 'JavaScript'], bonnesReponses: [3], note: 20, duree: 10 },
+      { type: 'directe', enonce: 'Quelle est la capitale de la France ?', reponse: 'Paris', tolerance: 0, note: 20, duree: 10 }
+    ];
+
+    let score = 0, index = 0, timerInterval;
+    const container = document.getElementById('exam-container');
+
+    // Affichage d'une question
+    function afficherQuestion(i) {
+      container.innerHTML = '';
+      if (i >= questions.length) return afficherResultat();
+      const q = questions[i];
+      const div = document.createElement('div');
+      div.className = 'question-box';
+      let html = `<div class="timer" id="timer">${q.duree}s</div>`;
+      html += `<p><strong>Question ${i+1} :</strong> ${q.enonce}</p>`;
+      if (q.type === 'qcm') {
+        q.options.forEach((opt, idx) => {
+          html += `<label><input type="checkbox" name="rep" value="${idx}"> ${opt}</label><br>`;
+        });
+      } else {
+        html += `<input type="text" id="rep-directe" placeholder="Votre réponse ici">`;
+      }
+      html += `<br><button class="btn" onclick="soumettreReponse()">Valider</button>`;
+      div.innerHTML = html;
+      container.appendChild(div);
+      demarrerTimer(q.duree);
+    }
+
+    // Soumission de la réponse
+    function soumettreReponse() {
+      clearInterval(timerInterval);
+      const q = questions[index];
+      let correct = false;
+      if (q.type === 'qcm') {
+        const choisis = Array.from(document.querySelectorAll('input[name="rep"]:checked')).map(el => parseInt(el.value));
+        correct = JSON.stringify(choisis.sort()) === JSON.stringify(q.bonnesReponses.sort());
+      } else {
+        const rep = document.getElementById('rep-directe').value.trim().toLowerCase();
+        correct = rep === q.reponse.toLowerCase();
+      }
+      if (correct) {
+        score += q.note;
+        // Enregistrement réponse correcte (placeholder)
+        fetch('/api/save-answer', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: index, correct: true })
+        }).catch(console.error);
+      }
+      index++;
+      afficherQuestion(index);
+    }
+
+    // Affichage du résultat
+    function afficherResultat() {
+      container.innerHTML = '';
+      document.getElementById('resultat').classList.remove('hidden');
+      document.getElementById('resultat').innerHTML = `<h3>Examen terminé !</h3><p>Score : <strong>${score}</strong> / 100</p>`;
+      // Enregistrer score final (placeholder)
+      fetch('/api/save-score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ score })
+      }).catch(console.error);
+    }
+
+    // Gestion du timer
+    function demarrerTimer(seconds) {
+      const timerElem = document.getElementById('timer');
+      let t = seconds;
+      timerInterval = setInterval(() => {
+        t--;
+        timerElem.textContent = `${t}s`;
+        if (t <= 0) {
+          clearInterval(timerInterval);
+          soumettreReponse();
+        }
+      }, 1000);
+    }
+
+    // Initialisation
+    document.getElementById('start-btn').addEventListener('click', () => {
+      requestGeolocation(() => {
+        document.getElementById('pre-exam').classList.add('hidden');
+        container.classList.remove('hidden');
+        afficherQuestion(0);
+    });
+    });
+  </script>
+</body>
+</html>
