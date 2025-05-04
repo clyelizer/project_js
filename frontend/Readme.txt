@@ -12,3 +12,6 @@ par ce choix , ya redirection  vers la page examen ou generation de la page pass
 examen.html:
 presente la page de creation d'examen 
 gere les operation d'ajout , modification, suppression des questions, de leurs reponses et de tous les autres elements
+
+
+node-modules contients les modules necessaires: express, mongoose,cors,....

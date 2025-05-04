@@ -1,47 +1,55 @@
-const form = document.getElementById('loginForm');
-const emailError = document.getElementById('emailError');
-const passwordError = document.getElementById('passwordError');
+// frontend/js/login.js
+// Gère la soumission du formulaire de connexion et la redirection
 
-form.addEventListener('submit', async e => {
+document.addEventListener('load', () => {
+  document.getElementById('loginForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  emailError.textContent = '';
-  passwordError.textContent = '';
 
-  const email = document.getElementById('email').value.trim();
-  const password = document.getElementById('password').value;
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
 
-  if (!email || !password) {
-    if (!email) emailError.textContent = 'Email requis';
-    if (!password) passwordError.textContent = 'Mot de passe requis';
-    return;
-  }
+    try {
+      const response = await fetch('http://localhost:3000/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+      });
 
-  try {
-    const ping = await fetch('/api/ping');
-    if (!ping.ok) throw new Error('Serveur hors ligne');
+      const data = await response.json();
 
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
-    });
-    const data = await res.json();
+      if (!response.ok) {
+        // Affiche le message d'erreur retourné par le serveur
+        alert(data.message || 'Échec de la connexion');
+        return;
+      }
 
-    if (res.ok) {//reussite
+      // Enregistrer le token JWT dans le localStorage
+      localStorage.setItem('token', data.token);
 
-      localStorage.setItem('authUser', JSON.stringify(data.user));
-      alert(`Bienvenue ${data.user.nom} !`);
-      window.location.href = '/transition.html';
-
-
-    } else if (res.status === 401) {
-      passwordError.textContent = 'Identifiants incorrects';
-    } else {
-      emailError.textContent = data.error || 'Erreur';
+      // Rediriger vers la page examen.html
+      window.location.href = '/examen.html';
+    } catch (err) {
+      console.error('Erreur lors de la connexion :', err);
+      alert('Erreur réseau. Veuillez réessayer.');
     }
-
-  } catch (err) {
-    console.error(err);
-    passwordError.textContent = err.message;
-  }
+  });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
