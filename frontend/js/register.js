@@ -1,5 +1,5 @@
- // Gestion de l’envoi du formulaire d’inscription
-document.getElementById('signup_btn').addEventListener('submit', function(e) {
+  // Gestion de l’envoi du formulaire d’inscription
+document.getElementById('signupForm').addEventListener('submit', (e)=> {
   e.preventDefault();
 
   // Lecture des valeurs saisies
@@ -22,28 +22,24 @@ document.getElementById('signup_btn').addEventListener('submit', function(e) {
 
   // Envoi de la requête POST
   axios.post('http://localhost:3000/users', {
-    id: 23,
-    email:    email,
-    password: password,
-    nom:      nom,
-    prenom:   prenom,
-    sexe:     sexe,
-    school:   school,
-    filiere:  filiere,
-    naissance: naissance,
+    email:        email,
+    password:     password,
+    nom:          nom,
+    prenom:       prenom,
+    naissance:    naissance,
+    sexe:         sexe,
+    etablissement: school, 
+    filiere:       filiere
   })
     .then(response => {
      
-
-      // 2. Réinitialisation du formulaire
-      e.target.reset();
-
-
-      // 4. Notification de succès
-      alert('Client ajouté avec succès !');
-    })
+    // Notification de succès et redirection
+    alert(`Compte créé avec succès !\nBienvenue ${nom} ${prenom}`);
+    e.target.reset();
+    window.location.href = './transition.html';
+  })
     .catch(error => {
-      console.error('Erreur lors de l’ajout du client :', error);
-      alert('Une erreur est survenue lors de l’inscription. Veuillez réessayer.');
+      console.error('Erreur lors de la creation du compte:', error);
+      alert("Une erreur est survenue lors de l'inscription. Veuillez réessayer.");
     });
 });
