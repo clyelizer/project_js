@@ -1,31 +1,56 @@
+<!-- frontend/examen.html -->
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Création d'un examen</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Create Exam</title>
   <link rel="stylesheet" href="css/examen.css">
 </head>
 <body>
-  <div id="entete">
-    <h2 id="title" >CREATION D'EXAMEN</h2>
-    <label for="titre">Titre de l'examen :</label>
-    <input type="text" id="titre" placeholder="Saisir un titre:">
+  <div class="container">
+    <!-- Sidebar Menu -->
+    <nav class="sidebar" role="tablist" aria-orientation="vertical">
+      <button class="tab-btn active" data-target="create" role="tab" aria-selected="true">Create</button>
+      <button class="tab-btn" data-target="preview" role="tab" aria-selected="false">Preview</button>
+      <button class="tab-btn" data-target="finish" role="tab" aria-selected="false">Finish</button>
+    </nav>
 
-    <label for="description">Description :</label>
-    <textarea id="description" placeholder="Saisir un text:"></textarea>
+    <!-- Dynamic Content -->
+    <main class="content">
+      <!-- Create Section -->
+      <section id="create" class="tab-content active" role="tabpanel">
+        <h2>Creation</h2>
+        <div id="entete">
+          <label for="titre">Exam Title:</label>
+          <input type="text" id="titre" placeholder="Enter title">
 
-    <label for="public">Public ciblé :</label>
-    <input type="text" id="public" placeholder="Saisir un text(ex: 2e année MIP, S4, groupe A) 
-    ">
-  </div>
-  
-  <div class="questions">
-    <h2 id="questions_entete">Questions</h2>
-    <button id="btn">+ Ajouter une question</button><br>
-    <button id="apercu" style="width: 150px;">Aperçu</button><br>
-    <button id="terminer" style="width: 150px;">Finir </button>
+          <label for="description">Description:</label>
+          <textarea id="description" placeholder="Enter description"></textarea>
+
+          <label for="public">Target Audience:</label>
+          <input type="text" id="public" placeholder="e.g., 2nd Year CS, Group A">
+        </div>
+        <div class="questions">
+          <h3>Questions</h3>
+          <button id="btn">+ Add Question</button>
+          <div id="questionsList"></div>
+        </div>
+      </section>
+
+      <!-- Preview Section -->
+      <section id="preview" class="tab-content" role="tabpanel" hidden>
+        <h2>Preview</h2>
+        <pre id="previewContent"></pre>
+      </section>
+
+      <!-- Finish Section -->
+      <section id="finish" class="tab-content" role="tabpanel" hidden>
+        <h2>Finish & Publish</h2>
+        <button id="publishBtn">Publish Exam</button>
+      </section>
+    </main>
   </div>
   <script src="js/examen.js"></script>
-
 </body>
 </html>

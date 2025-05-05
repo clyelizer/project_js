@@ -1,3 +1,5 @@
+                    plateforme examen en ligne
+    Presentation des differentes pages:
 register.html:
 La page qui montre la page d'inscription et gere l'inscription(creation  de compte) 
 redirige vers transition.html pour le choix de creer exam ou passer exam
