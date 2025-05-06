@@ -1,16 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require('cors'); // Si nécessaire
 const path = require('path');
+const authRoutes = require('./routes/auth');
+const examenRoutes = require('./routes/examens'); // Import des routes pour les examens
+
 const User = require('./models/User');
-const Examen = require('./models/Examen')
-const Question = require('./models/Question')
+const Examen = require('./models/Examen');
+const Question = require('./models/Question');
 
 const app = express();
 
 // Middleware pour parser le JSON
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors()); // Si vous utilisez un frontend séparé
+app.use('/examens', examenRoutes); // Enregistre les routes pour les examens
 
 // Servir les fichiers statiques depuis le dossier frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -18,8 +24,8 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 // Connexion à MongoDB
 mongoose
   .connect('mongodb://admin:1234@localhost:27017/examdb?authSource=admin')
-  .then(() => console.log('✅ MongoDB connecté'))
-  .catch(err => console.error('❌ Erreur MongoDB:', err));
+  .then(() => console.log('MongoDB connecté'))
+  .catch(err => console.error('Erreur MongoDB:', err));
 
 // Route POST pour l'inscription des utilisateurs
 app.post('/users', async (req, res) => {
@@ -52,27 +58,31 @@ app.post('/examens', async (req, res) => {
     await examen.save();
     res.status(201).json({ message: 'Exam added succesfully' });
   } catch (err) {
-    console.error("Error while  Exam's adding", err);
-    res.status(400).json({ message: "Error while  Exam's adding", error: err.message });
+    console.error("Error while Exam's adding", {
+      error: err,
+      requestBody: req.body
+    });
+    res.status(500).json({ message: "Error while Exam's adding", error: err.message });
   }
 });
-
-
 
 // Route racine : redirige vers login.html
 app.get('/', (req, res) => {
   res.redirect('/login.html');
 });
 
+// Toutes les routes définies dans authRoutes seront préfixées par /api/auth
+app.use('/api/auth', authRoutes);
+
 // Middleware 404
 app.use((req, res) => {
-  res.status(404).send('Page non trouvée');
+  res.status(404).json({ message: 'Page non trouvée' });
 });
 
 // Démarrage du serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+  console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
 
 

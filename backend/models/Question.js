@@ -1,22 +1,15 @@
 const mongoose = require('mongoose');
 
 const questionSchema = new mongoose.Schema({
-  type: { type: String, required: true, enum: ["direct", "qcm"] },
-  statement: { type: String }, //cest l'enonce
-  media: 
-  [{ type: { type: String, enum: ["image", "audio", "video"] },
-    url: { type: String, required: true },
-    name: {type: String} 
-    }],
-  answer: { type: String },
-  tolerance: { type: Number },
-  // Pour les QCM :
-  options: [{
-    text: { type: String },
-    isCorrect: { type: Boolean, default: false }
-  }],
-  score: { type: Number, required: true }, 
-  duration: { type: Number, required: true }, 
+  type: { type: String, required: true },
+  statement: { type: String, required: true },
+  media: { type: Array, default: [] },
+  options: { type: Array, default: [] },
+  answer: { type: String, default: '' },
+  tolerance: { type: Number, default: 0 },
+  score: { type: Number },
+  duration: { type: Number}
 });
+
 
 module.exports = mongoose.model('Question', questionSchema);
