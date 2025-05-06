@@ -49,7 +49,7 @@ Le timer et le scoring se lancent automatiquement,
 Les questions se presentent une a une
 
 NB: Autrement, Juste saisir le lien d'examen dans une barre et recherche et tout se fear automatiquement
-jusqu'au passge d'examen
+jusqu'au passage d'examen
 
                    
                    
