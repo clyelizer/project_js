@@ -13,13 +13,6 @@ document.getElementById('signupForm').addEventListener('submit', (e)=> {
   const naissance = document.getElementById('naissance').value;      // format YYYY‑MM‑DD
 
 
-//
-  // Pour debug
-  console.log(email);
-  console.log(password);
-  console.log(nom, prenom, sexe, school, filiere, naissance);
-
-
   // Envoi de la requête POST
   axios.post('http://localhost:3000/users', {
     email:        email,

@@ -9,17 +9,18 @@
 </head>
 <body>
   <div class="container">
-    <!-- Sidebar Menu -->
+    <!-- le Menu dans le site droit  -->
     <nav class="sidebar" role="tablist" aria-orientation="vertical">
-      <button class="tab-btn active" data-target="create" role="tab" aria-selected="true">Create</button>
-      <button class="tab-btn" data-target="preview" role="tab" aria-selected="false">Preview</button>
-      <button class="tab-btn" data-target="finish" role="tab" aria-selected="false">Finish</button>
+      <button class="tab_btn active" data-target="create" role="tab" aria-selected="true">Create</button>
+      <button class="tab_btn" data-target="preview" role="tab" aria-selected="false">Preview</button>
+      <button id="btn_finish" class="tab_btn" data-target="finish" role="tab" aria-selected="false">Finish</button>
     </nav>
 
-    <!-- Dynamic Content -->
+    <!-- Dynamic Content de droite -->
     <main class="content">
+      
       <!-- Create Section -->
-      <section id="create" class="tab-content active" role="tabpanel">
+      <section id="create" class="tab_content active" role="tabpanel">
         <h2>Creation</h2>
         <div id="entete">
           <label for="titre">Exam Title:</label>
@@ -29,28 +30,30 @@
           <textarea id="description" placeholder="Enter description"></textarea>
 
           <label for="public">Target Audience:</label>
-          <input type="text" id="public" placeholder="e.g., 2nd Year CS, Group A">
+          <input type="text" id="public" placeholder="ex: S4 MIP, Group A">
         </div>
         <div class="questions">
           <h3>Questions</h3>
-          <button id="btn">+ Add Question</button>
+          <button class="btn_add">+ Add Question</button>
           <div id="questionsList"></div>
         </div>
       </section>
 
       <!-- Preview Section -->
-      <section id="preview" class="tab-content" role="tabpanel" hidden>
+      <section id="preview" class="tab_content" role="tabpanel" hidden>
         <h2>Preview</h2>
         <pre id="previewContent"></pre>
       </section>
 
       <!-- Finish Section -->
-      <section id="finish" class="tab-content" role="tabpanel" hidden>
+      <section id="finish" class="tab_content" role="tabpanel" hidden>
         <h2>Finish & Publish</h2>
         <button id="publishBtn">Publish Exam</button>
       </section>
     </main>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
   <script src="js/examen.js"></script>
 </body>
 </html>
