@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema({
   naissance:   { type: Date,   required: true },
   sexe:        { type: String, required: true },
   etablissement:{ type: String,required: true },
-  filiere:     { type: String, required: true }
+  filiere:     { type: String, required: true },
+  localisation: { type: String, required: false }
 });
 
 // Avant de sauvegarder, on hache le password

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -5,6 +6,7 @@ const cors = require('cors'); // Si nécessaire
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const examenRoutes = require('./routes/examens'); // Import des routes pour les examens
+const geolocalisationRoutes = require('./routes/geolocalisation'); // Importer les routes de géolocalisation
 
 const User = require('./models/User');
 const Examen = require('./models/Examen');
@@ -38,6 +40,39 @@ app.post('/users', async (req, res) => {
     res.status(400).json({ message: 'Échec de la création de l\'utilisateur', error: err.message });
   }
 });
+//
+// partie a effacer
+// // Route POST pour la connexion des utilisateurs
+// app.post('/api/auth', async (req, res) => {
+//   try {
+//     const { email, password } = req.body;
+
+//     // Vérifiez si l'utilisateur existe
+//     const user = await User.findOne({ email });
+//     if (!user) {
+//       return res.status(404).json({ message: 'Utilisateur non trouvé' });
+//     }
+
+//     // Vérifiez si le mot de passe est correct
+//     const isPasswordValid = await user.comparePassword(password); // Assurez-vous que la méthode comparePassword existe dans votre modèle User
+//     if (!isPasswordValid) {
+//       return res.status(401).json({ message: 'Mot de passe incorrect' });
+//     }
+
+//     // Générer un token ou gérer la session ici
+//     res.status(200).json({ message: 'Connexion réussie', user });
+//   } catch (err) {
+//     console.error('Erreur lors de la connexion:', err);
+//     res.status(500).json({ message: 'Erreur interne du serveur', error: err.message });
+//   }
+// });
+
+
+
+
+
+
+
 
 // Route POST pour ajout de question
 app.post('/questions', async (req, res) => {
@@ -73,16 +108,15 @@ app.get('/', (req, res) => {
 
 // Toutes les routes définies dans authRoutes seront préfixées par /api/auth
 app.use('/api/auth', authRoutes);
-
+app.use('/api/auth', geolocalisationRoutes); // Enregistrer les routes sous le préfixe /api/auth
 // Middleware 404
 app.use((req, res) => {
   res.status(404).json({ message: 'Page non trouvée' });
 });
 
 // Démarrage du serveur
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Serveur démarré sur http://localhost:${PORT}`);
 });
-
 

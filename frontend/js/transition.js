@@ -9,7 +9,7 @@ document.querySelector(".transition-container").addEventListener("click",(e)=>{
        contenaire.innerHTML = `
         <h2>Exam Link</h2>
         <h3>Please enter the exam link to begin</h3>
-        <input type="url" placeholder="http://localhost:3000/passer_examen/Exam_id">
+        <input type="url" placeholder="http://localhost:3000/passer_examen.html?id=681b4c78bcf034714cdecd2c">
         <input type="button" value="Start" id="start_btn">`;
 
        contenaire.classList.add('contenaire');
@@ -21,8 +21,7 @@ document.querySelector(".transition-container").addEventListener("click",(e)=>{
                 // Enfin on redirige vers la page de passage d'examen
                 const urlInput = e.currentTarget.querySelector("input[type='url']")
                 const url=urlInput.value.trim();
-                const regex = /^https?:\/\/.+\/passer_examen\/[a-zA-Z0-9_-]+$/;
-                
+                const regex = /^https?:\/\/[^?#]+\/passer_examen\.html(\?.*)?$/;
                 if (regex.test(url)) {
                     window.location.href = url;
                 } else {

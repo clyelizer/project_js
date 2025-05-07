@@ -52,9 +52,11 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             }
             return;
         }
-
         // Enregistrer le token JWT dans le localStorage
         localStorage.setItem('token', data.token);
+
+        // Enregistrer l'email dans le sessionStorage
+        sessionStorage.setItem('email', email);
 
         // Rediriger vers la page transition.html
         window.location.href = '/transition.html';
