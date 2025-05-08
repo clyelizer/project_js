@@ -9,18 +9,20 @@
 <body>
   <div class="box">
     <h1>SIGN IN</h1>
-    <form id="loginForm">
-      <div class="form-group">
-        <input type="email" id="email" placeholder="Email:" required>
+    <form  id="loginForm">
+      <div class="form_group">
+        <input type="email" id="email" placeholder="Email:" >
         <div id="emailError" class="error"></div>
       </div>
-      <div class="form-group">
-        <input type="password" id="password" placeholder="Password:" required>
+      <div class="form_group">
+        <input type="password" id="password" placeholder="Password:" >
         <div id="passwordError" class="error"></div>
       </div>
-      <button type="loginForm">Connect</button>
-      <!-- todo:enlever onclick de button -->
-      <button type="button" onclick="window.location.href = '/register.html'">Create account</button>
+      <div class="form_group">
+        <button type="submit" >Connect</button>
+        <!-- todo:enlever onclick de button -->
+        <button type="button" onclick="window.location.href = '/register.html'">Create account</button>
+      </div>
     </form>
   </div>
   <script src="./js/login.js"></script>

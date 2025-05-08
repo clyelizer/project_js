@@ -1,0 +1,27 @@
+<!-- passer_examen.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Exam</title>
+    <link rel="stylesheet" href="./css/passer_examen.css">
+</head>
+<body>
+    <nav>
+        <ul class="nav-bar">
+            <li><a href="login.html">Acceuil</a></li>
+            <li><a id="Deconnexion" href="register.html">Deconnexion</a></li>
+        </ul>
+    </nav>
+    <h1>Exam in progress...</h1>
+    <div id="question_container" class="question-box">
+        <p>Please be aware, the evaluation will begin very soon<br>GOOD LUCK</p>
+        <p id="question-text">Loading question...</p>
+        <div id="media-container"></div>
+        <div id="options-container"></div>
+        <input type="text" id="answer" placeholder="Your answer here..." style="display:none"/>
+        <p>Time remaining: <span id="timer" class="timer">0</span> seconds</p>
+    </div>
+    <script src="js/passer_examen.js"></script>
+</body>
+</html>

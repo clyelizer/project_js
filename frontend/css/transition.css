@@ -1,10 +1,10 @@
-body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
+body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif;    background: #a0aab9;
+}
 .transition-container {
     display: flex;
     height: 100vh;
     align-items: center;
     justify-content: center;
-    background: #f0f2f5;
 }
 .option-card {
     flex: 1;
@@ -42,14 +42,18 @@ body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background: #007BFF;
+    background: #939aa2;
     color: #fff;
     font-size: 1rem;
     text-decoration: none;
     transition: background 0.3s ease;
 }
 .option-btn:hover {
-    background: #0056b3;
+    background: #0e8b48;
+}
+
+.option-btn:active {
+    transform: translate(-2px,-2px);
 }
 
 
@@ -57,3 +61,69 @@ body, html { margin:0; padding:0; height:100%; font-family: Arial, sans-serif; }
     display: none;
 }
 
+/* style de la section saisie d'input et de son button commencer */
+
+.contenaire {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 420px;
+    margin: 60px auto;
+    padding: 30px 20px;
+    border: 1px solid #ccc;
+    background-color: #f0f6f8e7;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.contenaire h2 {
+    margin-bottom: 10px;
+    color: #004d66;
+    font-size: 22px;
+}
+
+.contenaire h3 {
+    margin-bottom: 20px;
+    color: #1f3137;
+    font-size: 16px;
+    text-align: center;
+}
+
+.contenaire input[type="url"] {
+    width: 90%;
+    height: 40px;
+    padding: 5px 10px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.contenaire input[type="url"]:focus {
+    border-color: #0088cc;
+}
+
+.contenaire input[type="button"] {
+    width: 60%;
+    height: 40px;
+    font-size: 16px;
+    background-color: #989fa2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.contenaire input[type="button"]:hover {
+    background-color: #159d42;
+}
+
+
+.contenaire input[type="button"]:active {
+    transform: translate(-2px,-2px);
+}
