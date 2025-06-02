@@ -1,6 +1,5 @@
 const express = require('express');
 const Examen = require('../models/Examen');
-const Question = require('../models/Question');
 const User = require('../models/User'); // Importer le modèle User
 const router = express.Router();
 // Route pour mettre à jour le lien d'un examen spécifique
@@ -52,7 +51,7 @@ router.post('/', async (req, res) => {
 router.get('/:idExam/questions', async (req, res) => {
   try {
     const { idExam } = req.params;
-    const examen = await Examen.findById(idExam).populate('questions');
+    const examen = await Examen.findById(idExam);
 
     if (!examen) {
       return res.status(404).json({ message: 'Exam not found' });
@@ -73,7 +72,7 @@ router.post('/:idExam/submit', async (req, res) => {
     const { idExam } = req.params;
     const { answers } = req.body;
 
-    const examen = await Examen.findById(idExam).populate('questions');
+    const examen = await Examen.findById(idExam);
 
     if (!examen) {
       return res.status(404).json({ message: 'Exam not found' });
