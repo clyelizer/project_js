@@ -2,9 +2,9 @@
 
 require('dotenv').config();
 const express = require('express');
-const bcrypt = require('bcrypt');           // Pour comparer les mots de passe
-const jwt = require('jsonwebtoken');        // Pour générer et vérifier le JWT
-const User = require('../models/User');     // Import du modèle User
+const bcrypt = require('bcrypt'); // Pour comparer les mots de passe
+const jwt = require('jsonwebtoken'); // Pour générer et vérifier le JWT
+const User = require('../models/User'); // Import du modèle User
 const router = express.Router();
 
 /**
@@ -29,11 +29,9 @@ router.post('/', async (req, res) => {
 
     // 3. Générer un JWT
     const payload = { userId: user._id, email: user.email };
-    const token = jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '1h',
+    });
 
     // 4. Retourner le token au client
     res.json({ token });
@@ -69,6 +67,21 @@ function authenticateToken(req, res, next) {
  */
 router.get('/', authenticateToken, (req, res) => {
   res.json({ message: 'Authenticated', user: req.user });
+});
+
+// Route POST for user registration (moved from server.js)
+router.post('/register', async (req, res) => {
+  try {
+    const user = new User(req.body);
+    await user.save();
+    res.status(201).json({ message: 'Utilisateur créé avec succès' });
+  } catch (err) {
+    console.error('Erreur lors de la création de l\'utilisateur:', err);
+    res.status(400).json({
+      message: 'Échec de la création de l\'utilisateur',
+      error: err.message,
+    });
+  }
 });
 
 module.exports = router;

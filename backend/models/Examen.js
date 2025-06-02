@@ -8,7 +8,7 @@ const questionSchema = new mongoose.Schema({
   answer: { type: String, default: '' },
   tolerance: { type: Number, default: 0 },
   score: { type: Number },
-  duration: { type: Number}
+  duration: { type: Number },
 });
 
 const examenSchema = new mongoose.Schema({
@@ -17,7 +17,7 @@ const examenSchema = new mongoose.Schema({
   audience: { type: String, required: true },
   link: { type: String, default: '' },
   questions: [questionSchema], // Tableau de questions
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
 });
 
 module.exports = mongoose.model('Examen', examenSchema);
